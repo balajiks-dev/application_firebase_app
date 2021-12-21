@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home/home_page.dart';
+
 
 class SignIn extends StatelessWidget {
   @override
@@ -43,7 +45,7 @@ class SignIn extends StatelessWidget {
           Row(
             children: <Widget>[
               SizedBox(width: 30),
-              Text('New here ? ',
+              Text('New here? ',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               GestureDetector(
                 onTap: () {
@@ -95,122 +97,138 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          // email
-          TextFormField(
-            // initialValue: 'Input text',
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.email_outlined),
-              labelText: 'Email',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  const Radius.circular(100.0),
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            // email
+            TextFormField(
+              // initialValue: 'Input text',
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.email_outlined),
+                labelText: 'Email',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    const Radius.circular(100.0),
+                  ),
                 ),
               ),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-            onSaved: (val) {
-              email = val!;
-            },
-          ),
-          SizedBox(
-            height: 20,
-          ),
-
-          // password
-          TextFormField(
-            // initialValue: 'Input text',
-            decoration: InputDecoration(
-              labelText: 'Password',
-              prefixIcon: Icon(Icons.lock_outline),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  const Radius.circular(100.0),
-                ),
-              ),
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-                child: Icon(
-                  _obscureText ? Icons.visibility_off : Icons.visibility,
-                ),
-              ),
-            ),
-            obscureText: _obscureText,
-            onSaved: (val) {
-              password = val!;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-          ),
-
-          SizedBox(height: 30),
-
-          SizedBox(
-            height: 54,
-            width: 184,
-            child: ElevatedButton(
-              onPressed: () async {
-                // Respond to button press
-
-                if (_formKey.currentState!.validate()) {
-
-                  _formKey.currentState!.save();
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  AuthenticationHelper()
-                      .signIn(email: email, password: password)
-                      .then((result) {
-                    if (result != null) {
-
-
-                      prefs.setString(AppStrings.userName, result.user!.displayName!);
-                      // prefs.setString(AppStrings.userMail, result.!.email!);
-                      prefs.setString(AppStrings.userUID, result.user!.uid);
-                      prefs.setString(AppStrings.userPhoto, result.user!.photoURL!);
-                    } else {
-
-                      final snackBar = SnackBar(
-                          duration: Duration(seconds: 2),
-                          backgroundColor: ColorData.toastColor,
-                          content: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                             result,
-                              style: GoogleFonts.merriweather(
-                                  color: ColorData.text_base_color,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ));
-
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  });
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter some text';
                 }
+                return null;
               },
-              child: Text(
-                'Login',
-                style: TextStyle(fontSize: 24),
+              onSaved: (val) {
+                email = val!;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
+            // password
+            TextFormField(
+              // initialValue: 'Input text',
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: Icon(Icons.lock_outline),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    const Radius.circular(100.0),
+                  ),
+                ),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  child: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                  ),
+                ),
+              ),
+              obscureText: _obscureText,
+              onSaved: (val) {
+                password = val!;
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+            ),
+
+            SizedBox(height: 30),
+
+            SizedBox(
+              height: 50,
+              width: 150,
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    AuthenticationHelper()
+                        .signIn(email: email, password: password)
+                        .then((result) {
+                      if (result != null) {
+                        prefs.setString(AppStrings.userName, result.displayName == null ?"":result.displayName);
+                        prefs.setString(AppStrings.userMail, result.email);
+                        prefs.setString(AppStrings.userUID, result.uid);
+                        prefs.setString(AppStrings.userPhoto, result.photoURL == null?"":result.photoURL);
+                        final snackBar = SnackBar(
+                            duration: Duration(seconds: 2),
+                            backgroundColor: ColorData.toastColor,
+                            content: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Logged Successfully",
+                                style: GoogleFonts.merriweather(
+                                    color: ColorData.text_base_color,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HomePage()),
+                          ModalRoute.withName('/'),
+                        );
+                      } else {
+                        final snackBar = SnackBar(
+                            duration: Duration(seconds: 2),
+                            backgroundColor: ColorData.toastColor,
+                            content: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                               result,
+                                style: GoogleFonts.merriweather(
+                                    color: ColorData.text_base_color,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ));
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    });
+                  }
+                },
+                child: Text(
+                  'Login',
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
