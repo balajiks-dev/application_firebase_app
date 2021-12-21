@@ -1,3 +1,4 @@
+import 'package:application_firebase_app/view/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -146,7 +147,7 @@ class LoginPage extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: height / 3),
+            margin: EdgeInsets.only(top: height / 4.5),
             height: height / 3,
             width: width / 3,
             decoration: BoxDecoration(
@@ -321,9 +322,9 @@ class LoginPage extends StatelessWidget {
                   child: Container(
                     height: height / 12,
                     margin:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: Colors.blueAccent,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: Row(
@@ -339,6 +340,45 @@ class LoginPage extends StatelessWidget {
                           margin: EdgeInsets.only(left: height / 7),
                           child: Text(
                             AppStrings.phone,
+                            style: GoogleFonts.merriweather(
+                                color: ColorData.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  splashColor: ColorData.gray_shade_1,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Signup()),
+                    );
+                  },
+                  child: Container(
+                      height: height / 12,
+                      margin:
+                      EdgeInsets.symmetric(horizontal: 20.0, ),
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                            margin: EdgeInsets.only(left: 25.0),
+                            child: Icon(
+                              Icons.email,
+                              color: Colors.white,
+                              size: 27.0,
+                            )),
+                        Container(
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.height / 7),
+                          child: Text(
+                            "Email",
                             style: GoogleFonts.merriweather(
                                 color: ColorData.white,
                                 fontWeight: FontWeight.bold),
