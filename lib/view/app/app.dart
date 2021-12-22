@@ -37,7 +37,7 @@ class App extends StatelessWidget {
                   color: ColorData.white,
                   child: Center(
                     child: Image.asset(
-                      UIAssets.zartekLogoImage,
+                      UIAssets.appLogoImage,
                     ),
                   ));
             },

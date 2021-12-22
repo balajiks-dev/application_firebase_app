@@ -40,23 +40,23 @@ class SignIn extends StatelessWidget {
             child: LoginForm(),
           ),
 
-          SizedBox(height: 20),
+          // SizedBox(height: 20),
 
-          Row(
-            children: <Widget>[
-              SizedBox(width: 30),
-              Text('New here? ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Signup()));
-                },
-                child: Text('Get Registered Now!!',
-                    style: TextStyle(fontSize: 20, color: Colors.blue)),
-              )
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     SizedBox(width: 30),
+          //     Text('New here? ',
+          //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          //     GestureDetector(
+          //       onTap: () {
+          //         Navigator.push(context,
+          //             MaterialPageRoute(builder: (context) => Signup()));
+          //       },
+          //       child: Text('Get Registered Now!!',
+          //           style: TextStyle(fontSize: 20, color: Colors.blue)),
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );
@@ -227,6 +227,28 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
+                       SizedBox(height: 30),
+          Row(
+            children: [
+              Text("Don't have an account? ", style: TextStyle(
+                color: Colors.black,
+              ),),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Signup()),
+                    );
+                  },
+                  child: Text("Sign up account", style: TextStyle(
+                    color: Colors.blue,
+                  ),),
+                ),
+              ),
+            ],
+          )
           ],
         ),
       ),

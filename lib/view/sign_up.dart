@@ -35,55 +35,55 @@ class Signup extends StatelessWidget {
             child: SignupForm(),
           ),
 
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text('Already here?',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20)),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SignIn()),
-                          );
-                        },
-                        child: Text(' Get Logged in Now!',
-                            style: TextStyle(fontSize: 20, color: Colors.blue)),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20.0,top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Go Back',
-                              style: TextStyle(fontSize: 20, color: Colors.black)),
-                        ),
-                      ),
-                      Icon(Icons.arrow_back,size: 25,),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+          // Expanded(
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: <Widget>[
+          //       Padding(
+          //         padding: const EdgeInsets.only(top: 50.0),
+          //         child: Row(
+          //           children: <Widget>[
+          //             Text('Already here?',
+          //                 style: TextStyle(
+          //                     fontWeight: FontWeight.bold, fontSize: 20)),
+          //             GestureDetector(
+          //               onTap: () {
+          //                 Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(builder: (context) => SignIn()),
+          //                 );
+          //               },
+          //               child: Text(' Get Logged in Now!',
+          //                   style: TextStyle(fontSize: 20, color: Colors.blue)),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.only(right: 20.0,top: 20),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.end,
+          //           children: [
+          //             GestureDetector(
+          //               onTap: () {
+          //                 Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(builder: (context) => LoginPage()),
+          //                 );
+          //               },
+          //               child: Padding(
+          //                 padding: const EdgeInsets.all(8.0),
+          //                 child: Text('Go Back',
+          //                     style: TextStyle(fontSize: 20, color: Colors.black)),
+          //               ),
+          //             ),
+          //             Icon(Icons.arrow_back,size: 25,),
+          //           ],
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -246,6 +246,44 @@ class _SignupFormState extends State<SignupForm> {
               },
               child: Text('Sign Up'),
             ),
+                      space,
+          Row(
+            children: [
+              Text("Already have an account? ", style: TextStyle(
+                color: Colors.black,
+              ),),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignIn()),
+                    );
+                  },
+                  child: Text("Sign in account", style: TextStyle(
+                    color: Colors.blue,
+                  ),),
+                ),
+              ),
+            ],
+          ),
+          space,
+          Center(
+            child: InkWell(
+                    onTap: (){
+                       Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => LoginPage()),
+                  ModalRoute.withName('/'),
+                );
+                    },
+                    child: Text("Home Page", style: TextStyle(
+                      color: Colors.blue,
+                    ),),
+                  ),
+          ),
           ],
         ),
       ),
